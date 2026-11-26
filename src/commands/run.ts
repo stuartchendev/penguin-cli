@@ -1,11 +1,12 @@
 import { Command } from "commander";
+import { completePrompt } from "../llm/client.js";
 
 export function registerRunCommand(program: Command): void {
   program
     .command("run")
-    .description("Print a prompt")
-    .argument("[prompt...]", "prompt to print")
-    .action((promptParts: string[]) => {
+    .description("Send a prompt to LM Studio")
+    .argument("[prompt...]", "prompt to send")
+    .action(async (promptParts: string[]) => {
       const prompt = promptParts.join(" ").trim();
 
       if (!prompt) {
@@ -14,6 +15,11 @@ export function registerRunCommand(program: Command): void {
         return;
       }
 
-      console.log(prompt);
+      try {
+        console.log(await completePrompt(prompt));
+      } catch (error) {
+        console.error(error instanceof Error ? `Error: ${error.message}` : "Error: LM Studio request failed.");
+        process.exitCode = 1;
+      }
     });
 }

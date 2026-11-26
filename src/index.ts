@@ -12,4 +12,4 @@ program
 
 registerRunCommand(program);
 
-program.parse();
+await program.parseAsync();
