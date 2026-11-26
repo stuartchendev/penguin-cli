@@ -74,6 +74,18 @@ penguin run "Hello Penguin"
 
 The endpoint and model identifier should be configurable to match the local LM Studio setup.
 
+To choose a model interactively, run `penguin model`. The selected model is saved in the
+user-editable JSON file `~/.config/penguin-cli/config.json`:
+
+```json
+{
+  "LM_STUDIO_MODEL": "your-model-id"
+}
+```
+
+`LM_STUDIO_MODEL` in the process environment takes precedence over the saved config value.
+`LM_STUDIO_BASE_URL` continues to default to `http://localhost:1249/v1`.
+
 ## First Demo Project
 
 The first end-to-end demonstration will be a simple webpage featuring a cute penguin hugging a blanket.
